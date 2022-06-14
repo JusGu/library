@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
-    <link href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" rel="stylesheet">
+    <link href="normalize.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
@@ -28,11 +28,11 @@
                 <div class="modal-author-pages">
                     <div class="modal-author inner">
                         <h3>Author</h3><div class="break"></div>
-                        <input  id = "author" placeholder = "name ..." type="text">
+                        <input  id = "author" placeholder = "add the author..." type="text">
                     </div>
                     <div class="modal-pages inner">
                         <h3>Pages</h3><div class="break"></div>
-                        <input id = "pages" min="1" placeholder = "pgs ..." type="number">
+                        <input id = "pages" min="1" placeholder = "add the pages..." type="number">
                     </div>
                 </div>
                 <div class="modal-desc inner">
@@ -69,11 +69,19 @@
             <div class="hide-read"><input type="checkbox" class="hide-read-checkbox"><p>Hide Finished Books</p></div>
         </div>
         <div class="content">
+            <!-- EXAMPLE START -->
             <!-- <div class="item">
 
                 <div class="title">
                     <h3>Great Gatsby</h3>
-                    <i class="fa-solid fa-ellipsis"></i>
+                    <div class="options-container">
+                        <i class="fa-solid fa-ellipsis menu"></i>
+                        <div class="options menu">
+                            <p class="options-edit menu">Edit ...</p>
+                            <hr class="menu">
+                            <p class="options-delete menu">Delete</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="top">
@@ -92,12 +100,11 @@
                         <input type="checkbox" class="read-box">
                         <div>Finished</div>
                     </div>
-                </div> -->
+                </div>
 
-            </div>
+            </div> -->
 
-
-            </div>
+            <!-- EXAMPLE END -->
         </div>
     </div>
     <script src="./script.js"></script>

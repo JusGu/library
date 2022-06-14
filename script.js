@@ -1,5 +1,3 @@
-
-
 const myLibrary = [];
 const myCurLibrary = [];
 const content = document.querySelector('.content');
@@ -13,8 +11,51 @@ const modalPages = document.querySelector('#pages');
 const modalDesc = document.querySelector('#desc');
 const modalTags = document.querySelectorAll('.modaltag');
 const addButton = document.querySelector('.add');
+const optionsButton = document.querySelectorAll('.fa-ellipsis');
+const deleteButton = document.querySelector('.options-delete');
+const editButton = document.querySelector('.options-edit')
 const tColor = 'rgb(105, 102, 92);'
 
+
+
+function handleDeleteButton(e){
+    const index = e.parentElement.parentElement.parentElement.parentElement.id;
+    const remove =  e.parentElement.parentElement.parentElement.parentElement;
+    remove.style = "opacity: 0; transform: translateY(-0.5rem); transition: ease 0.2s all";
+    setTimeout(function() {
+        remove.remove();
+      }, 300);
+    myLibrary[index] = null;
+    console.log(myLibrary);
+}
+
+// Controls the opening and closing of the menu on the cards
+let menuOpen = false;
+let curMenu = null;
+
+function handleOptionsButton(e) {
+    const optionsSibling = e.nextElementSibling;
+    if(curMenu != null){
+        closeMenu();
+    }
+    if (!optionsSibling.style.opacity) {
+        optionsSibling.style = "visibility: visible; opacity: 1; transform: scaleY(1); translateY(0)";
+        menuOpen = true;
+        curMenu = optionsSibling;
+    } 
+}
+
+window.addEventListener('click',e => {
+    if(!e.target.classList.contains('menu') && menuOpen){
+        closeMenu();
+    }
+})
+
+function closeMenu(){
+    menuOpen = false;
+    curMenu.style = "";
+    curMenu = null;
+}
 modalTags.forEach(item => {
   item.addEventListener('click', e => {
     e.target.firstChild.style = e.target.firstChild.style.border == "" ? "border: 2px solid " + tColor : null;
@@ -102,13 +143,13 @@ function addBookToLibrary(myBook) {
 }
 function displayBooks(myLibrary){
   for(let i = 0; i < myLibrary.length; i++){
-    if(!myCurLibrary.includes(myLibrary[i])){
-      displayBook(myLibrary[i]);
+    if(!myCurLibrary.includes(myLibrary[i]) && myLibrary[i]){
+      displayBook(myLibrary[i],i);
       myCurLibrary.push(myLibrary[i]);
     }
   }
 }
-function displayBook(myBook){
+function displayBook(myBook, num){
   const title = displayTitle(myBook);
   const top = displayTop(myBook);
   const desc = document.createElement("p");
@@ -121,6 +162,7 @@ function displayBook(myBook){
   item.appendChild(desc);
   item.appendChild(bottom);
   item.style="opacity: 0; transform: translateY(-0.5rem); transition: ease 0.2s all";
+  item.id = num;
   content.appendChild(item);
   setTimeout(function() {
     item.style="transition: ease 0.2s all";
@@ -128,16 +170,35 @@ function displayBook(myBook){
 }
 
 // todo: support super long title
+
+const sanitizeHTML = function (str) {
+	return str.replace(/[^\w. ]/gi, function (c) {
+		return '&#' + c.charCodeAt(0) + ';';
+	});
+};
+
 function displayTitle(myBook){
   const title = document.createElement("h3");
-  title.innerHTML = myBook.title;
-  const icon = document.createElement("i");
-  icon.classList.add("fa-solid");
-  icon.classList.add("fa-ellipsis");
+  let titleText = sanitizeHTML(myBook.title);
+  if(titleText.length > 30){
+    titleText = titleText.slice(0, 27);
+    titleText += "...";
+  }
+  title.innerHTML = titleText;
   const wrapper = document.createElement("div");
   wrapper.classList.add("title");
   wrapper.appendChild(title);
-  wrapper.appendChild(icon);
+  const insertWrapper = `
+    <div class="options-container">
+        <i onclick={handleOptionsButton(this)} class="fa-solid fa-ellipsis menu"></i>
+        <div class="options menu">
+            <p class="options-edit menu">Edit ...</p>
+            <hr class="menu">
+            <p onclick={handleDeleteButton(this)} class="options-delete menu">Delete</p>
+        </div>
+    </div>
+  `
+  wrapper.innerHTML += insertWrapper;
   return wrapper;
 }
 
@@ -147,13 +208,13 @@ function displayTop(myBook){
   if(myBook.author){
     const author = document.createElement("p");
     author.classList.add("author");
-    author.innerHTML = `By <b>${myBook.author}</b>`;
+    author.innerHTML = `By <b>${sanitizeHTML(myBook.author)}</b>`;
     top.append(author);
   }
   if(myBook.pages){
     const pages = document.createElement("p");
     pages.classList.add("pages");
-    pages.innerHTML = ` <b>${myBook.pages}</b> Pages `;
+    pages.innerHTML = ` <b>${sanitizeHTML(myBook.pages)}</b> Pages `;
     top.appendChild(pages);
   }
   return top;
