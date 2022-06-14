@@ -6,45 +6,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
+    <link href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
     <div class="select">
         <div class="modal">
-            <div class="buttons">
-                <button class="cancel">
-                    Cancel
-                </button>
-                <button class="add">
-                    Add
-                </button>
-            </div>
-            <div class="modal-title inner">
-                <h3>Title</h3><div class="break"></div>
-                <input id = "title" placeholder = "add a title ..." type="text">
-            </div>
-            <div class="modal-author-pages">
-                <div class="modal-author inner">
-                    <h3>Author</h3><div class="break"></div>
-                    <input  id = "author" placeholder = "add an author ..." type="text">
+            <div class="modal-inner">
+                <div class="buttons">
+                    <button class="cancel">
+                        Cancel
+                    </button>
+                    <button class="add">
+                        Add
+                    </button>
                 </div>
-                <div class="modal-pages inner">
-                    <h3>Pages</h3><div class="break"></div>
-                    <input id = "pages" min="1" placeholder = "add the pages ..." type="number">
+                <div class="modal-title inner">
+                    <h3>Title</h3><div class="break"></div>
+                    <input id = "title" placeholder = "add a title ..." type="text">
                 </div>
-            </div>
-            <div class="modal-desc inner">
-                <h3>Description</h3><div class="break"></div>
-                <textarea id = "desc" rows="5" placeholder = "add a description..."class = "desc" type="text"></textarea>
-            </div>
-            <div class="modal-tags">
-                <h3>Tags</h3>
-                <div class="tags">
-                    <div class="filter filter1 modaltag modaltag1"><div class="color1 color"></div>fiction</div>
-                    <div class="filter filter2 modaltag modaltag2"><div class="color2 color"></div>non-fiction</div>
-                    <div class="filter filter3 modaltag modaltag3"><div class="color3 color"></div>manga</div>
-                    <div class="filter filter4 modaltag modaltag4"><div class="color4 color"></div>biography</div>
-    
+                <div class="modal-author-pages">
+                    <div class="modal-author inner">
+                        <h3>Author</h3><div class="break"></div>
+                        <input  id = "author" placeholder = "name ..." type="text">
+                    </div>
+                    <div class="modal-pages inner">
+                        <h3>Pages</h3><div class="break"></div>
+                        <input id = "pages" min="1" placeholder = "pgs ..." type="number">
+                    </div>
+                </div>
+                <div class="modal-desc inner">
+                    <h3>Description</h3><div class="break"></div>
+                    <textarea id = "desc" rows="5" placeholder = "add a description..."class = "desc" type="text"></textarea>
+                </div>
+                <div class="modal-tags">
+                    <h3>Tags</h3>
+                    <div class="tags">
+                        <div class="filter filter1 modaltag modaltag1"><div class="color1 color"></div>fiction</div>
+                        <div class="filter filter2 modaltag modaltag2"><div class="color2 color"></div>non-fiction</div>
+                        <div class="filter filter3 modaltag modaltag3"><div class="color3 color"></div>manga</div>
+                        <div class="filter filter4 modaltag modaltag4"><div class="color4 color"></div>biography</div>
+                    </div>
                 </div>
             </div>
             

@@ -34,10 +34,10 @@
     width: 0.5rem;
   }
   
-  /* Track */
+  /* Track
   ::-webkit-scrollbar-track {
     background: var(--hover);
-  }
+  } */
   
   /* Handle */
   ::-webkit-scrollbar-thumb {
@@ -52,6 +52,7 @@ body {
     font-family: 'Ubuntu', sans-serif;
     margin: 3rem;
     color: var(--t);
+    overflow-x: hidden;
 }
 
 
@@ -67,6 +68,7 @@ body {
     left:0;
     top:0;
     width: 100vw;
+    max-width: 100vw;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -78,18 +80,28 @@ body {
     opacity: 0;
 }
 
+
+
 .modal {
     background-color: var(--bg);
-    width: 40vw;
+    width: 60vw;
     display: flex;
     flex-direction: column;
-    padding: 2rem;
     height: fit-content;
+    max-height: calc(100vh - 3rem);
+    overflow: hidden;
     border-radius: 2rem;
     transition: 0.3s all ease;
-
-    
 }
+.modal-inner{
+    overflow: auto;
+    padding: 2rem;
+    height: 100%;
+}
+
+
+
+
 .modal .cancel{
     background-color: rgba(0,0,0,0);
     padding: 0.5rem 2rem 0.5rem 0rem;
@@ -175,7 +187,7 @@ body {
     width: 100%;
 }
 .modal .modal-author-pages{
-    max-width: 40vw;
+    width: 100%;
     display: grid;
     grid: 1fr/ 2fr 1fr;
     gap: 3rem;
@@ -188,6 +200,31 @@ body {
     padding-bottom: 2rem;
 }
 
+
+@media (max-width:800px){
+    .modal .buttons{
+        align-self: baseline;
+    }
+    .modal{
+        width: 100vw;
+        min-height: 100vh;
+        height: 100vh;
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        border-radius: 0px;
+        align-items: flex-end;
+        padding: 0px;
+    }
+
+    .select{
+        padding: 0px;
+    }
+
+    .tags{
+        flex-direction: column;
+    }
+}
 .header {
     grid-area: 1/1/2/3;
     display: flex;
