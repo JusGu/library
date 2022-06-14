@@ -16,6 +16,8 @@
     --ts: #B2AFA1;
     --bg: #FFFFFF;
     --debug: 1px red solid;
+    --hover: rgb(249,249,248);
+
 
 }
 .noselect {
@@ -26,6 +28,21 @@
           -ms-user-select: none; /* Internet Explorer/Edge */
               user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
+  }
+/* width */
+::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: var(--hover);
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--t);
+    border-radius: min(100vh, 100vw);
   }
 
 html{
@@ -52,15 +69,20 @@ body {
     width: 100vw;
     height: 100vh;
     display: flex;
-    place-content: center;
+    align-items: center;
+    justify-content: center;
+    display: none;
 }
 
 .modal {
     background-color: var(--bg);
-    width: 50vw;
+    width: 40vw;
     display: flex;
     flex-direction: column;
     padding: 2rem;
+    height: fit-content;
+    border-radius: 2rem;
+    
 }
 .modal .cancel{
     background-color: rgba(0,0,0,0);
@@ -73,7 +95,7 @@ body {
 
 .modal .add{
     background-color: var(--t);
-    padding: 0.5rem 2rem 0.5rem 2rem;
+    padding: 0.7rem 2.5rem 0.7rem 2.5rem;
     border-radius: 0.5rem;
     border: none;
     font-family: 'Ubuntu', sans-serif;
@@ -84,17 +106,82 @@ body {
 .modal .buttons{
     display: flex;
     justify-content: space-between;
+    
+}
+.add, .cancel{
+    cursor: pointer;
+}
+.modal .add:hover{
+    filter: brightness(90%);
 }
 
+.modal .cancel:hover{
+    filter: brightness(10%);
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: var(--ts);
+    opacity: 1; /* Firefox */
+  }
 .modal input{
-    background-color: var(--ts);
+    background-color: rgb(249,249,248);
     border: none;
     font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+    height: 1.5rem;
+    flex-grow: 1;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    color: var(--t);
+    width: 100%;
+    min-width: none;
 }
+
+.modal textarea{
+    resize: none;
+    background-color: rgb(249,249,248);
+    border: none;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+    height: 1.5rem;
+    flex-grow: 1;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    color: var(--t);
+    width: 100%;
+    min-width: none;
+}
+
+.modal input:focus{
+    outline: 2px solid var(--t);
+    flex-grow: 1;
+}
+
 .modal .tags{
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
 }
+
+
+.modal .inner{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.modal .modal-author-pages{
+    max-width: 40vw;
+    display: grid;
+    grid: 1fr/ 2fr 1fr;
+    gap: 3rem;
+}
+.modal .break{
+    flex-basis: 100%;
+}
+
+.modal .desc{
+    padding-bottom: 2rem;
+}
+
 .header {
     grid-area: 1/1/2/3;
     display: flex;
@@ -107,18 +194,25 @@ body {
 #logo{
     font-weight: bold;
     font-size: 1.5rem;
+    padding-left: 1rem;
 }
 .filter{
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+.filter:hover{
+    background-color: rgba(0,0,0,0.05);
+    cursor: pointer;
 }
 
 .color{
     width: 2rem;
     height: 2rem;
     border-radius: 1rem;
+    flex-shrink: 0;
 }
 
 .color1{
@@ -137,22 +231,73 @@ body {
     background-color: var(--green);
 }
 
+.hide-read{
+    margin-left: 1rem;
+    margin-top: 3rem;
+    color: var(--ts);
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+    transition: 0.3s all ease;
+}
+
+.hide-read input, .read input{
+    appearance: none;
+    background-color: none;
+    margin: 0;
+    font: inherit;
+    color: currentColor;
+    width: 1.5em;
+    height: 1.5em;
+    border: 0.15em solid currentColor;
+    border-radius: 0.5em;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+}
+
+.hide-read input:hover, .read input:hover{
+    filter: brightness(97%);
+}
+
+.hide-read input::before , .read input::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    background-color: var(--t);
+    transform-origin: bottom left;
+    border: 0.15em solid var(--t);
+    clip-path: polygon(19% 38%, 30% 71%, 94% 11%, 100% 31%, 25% 100%, 0% 50%);
+}
+
+  .hide-read input:checked::before , .read input:checked::before{
+    transform: scale(1);
+    border: 0.15em solid var(--t);
+  }
+
 .read{
     display: flex;
     align-items: center;
+    gap: 0.3rem;
 }
+
+
+
 
 .content{
     display: grid;
     grid-template-columns: repeat( auto-fit, minmax(400px, 1fr) );
     grid-template-rows: repeat( auto-fit, minmax(100px, 1fr) );
     gap: 1.5rem;
+    width: 100%;
 } 
 
 .item{
     background-color: var(--yellow);
     height: fit-content;
-    max-width: 50%;
+    max-width: 600px;
     border-radius: 0.5rem;
     padding: 1rem;
     display: flex;
@@ -168,6 +313,10 @@ body {
 .item .title i{
     font-size: 1.5rem;
     color: var(--ts);
+}
+
+.item .title i:hover{
+    color: var(--t);
 }
 .item .author, .item .pages{
     margin-top: 0rem;
@@ -186,3 +335,4 @@ body {
     justify-self: flex-end;
     color: var(--ts);
 }
+

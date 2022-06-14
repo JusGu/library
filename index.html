@@ -19,22 +19,23 @@
                     Add
                 </button>
             </div>
-            <div class="modal-title">
-                <h3>Title</h3>
-                <input type="text">
+            <div class="modal-title inner">
+                <h3>Title</h3><div class="break"></div>
+                <input placeholder = "add a title ..." type="text">
             </div>
-            <div class="modal-author">
-                <h3>Author</h3>
-                <input type="text">
-
+            <div class="modal-author-pages">
+                <div class="modal-author inner">
+                    <h3>Author</h3><div class="break"></div>
+                    <input placeholder = "add an author ..." type="text">
+                </div>
+                <div class="modal-pages inner">
+                    <h3>Pages</h3><div class="break"></div>
+                    <input placeholder = "add the pages ..." type="number">
+                </div>
             </div>
-            <div class="modal-pages">
-                <h3>Pages</h3>
-                <input type="number">
-            </div>
-            <div class="modal-desc">
-                <h3>Pages</h3>
-                <input class = "desc" type="number">
+            <div class="modal-desc inner">
+                <h3>Description</h3><div class="break"></div>
+                <textarea rows="5" placeholder = "add a description..."class = "desc" type="text"></textarea>
             </div>
             <div class="modal-tags">
                 <h3>Tags</h3>
@@ -63,10 +64,10 @@
                 <div class="filter filter3"><div class="color3 color"></div>manga</div>
                 <div class="filter filter4"><div class="color4 color"></div>biography</div>
             </div>
-            <div><input type="checkbox" class="hide">Hide Read Books</div>
+            <div class="hide-read"><input type="checkbox" class="hide-read-checkbox"><p>Hide Finished Books</p></div>
         </div>
         <div class="content">
-            <!-- <div class="item">
+            <div class="item">
                 <div class="title">
                     <h3>Great Gatsby</h3>
                     <i class="fa-solid fa-ellipsis"></i>
@@ -86,13 +87,56 @@
                     <div class="read"><input type="checkbox" class="read-box"><div>Finished</div></div>
                 </div>
 
-            </div> -->
+            </div>
+            <div class="item">
+                <div class="title">
+                    <h3>Great Gatsby</h3>
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+                <div class="top">
+                    <p class="author">By <b>F. Scott Fitzgerald</b></p>
+                    <p class="pages"><b>321</b> Pages</p>
+                </div>
+                
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet metus bibendum, faucibus est quis, eleifend lacus. Donec accumsan tortor at arcu tincidunt blandit vitae ac lorem.</p>
+                
+                <div class="bottom">
+                    <div class="labels">
+                        <div class="color color1"></div>
+                    </div>
+                    
+                    <div class="read"><input type="checkbox" class="read-box"><div>Finished</div></div>
+                </div>
+
+            </div>
+            <div class="item">
+                <div class="title">
+                    <h3>Great Gatsby</h3>
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+                <div class="top">
+                    <p class="author">By <b>F. Scott Fitzgerald</b></p>
+                    <p class="pages"><b>321</b> Pages</p>
+                </div>
+                
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet metus bibendum, faucibus est quis, eleifend lacus. Donec accumsan tortor at arcu tincidunt blandit vitae ac lorem.</p>
+                
+                <div class="bottom">
+                    <div class="labels">
+                        <div class="color color1"></div>
+                    </div>
+                    
+                    <div class="read"><input type="checkbox" class="read-box"><div>Finished</div></div>
+                </div>
+
+            </div>
 
 
             </div>
         </div>
     </div>
     <script src="./script.js"></script>
+    <script src="./checkbox.js"></script>
     
 </body>
 </html>
