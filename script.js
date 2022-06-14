@@ -38,7 +38,12 @@ function handleAddButton() {
     modalAuthor.value = "";
     modalPages.value = "";
     modalDesc.value="";
-    modalTags.forEach(item => item.classList.remove('filterselect'))
+    for(let i = 0; i < modalTags.length; i++){
+      if(modalTags[i].classList.contains('filterselect')){
+        modalTags[i].classList.toggle('filterselect');
+      }
+      modalTags[i].firstChild.style.border = "";
+    }
     addBookToLibrary(newBook);
     displayBooks(myLibrary);
     handleCancel();
