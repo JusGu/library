@@ -71,7 +71,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    display: none;
+    z-index: 1;
+    transition: 0.3s all ease;
+    overflow: hidden;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .modal {
@@ -82,6 +86,8 @@ body {
     padding: 2rem;
     height: fit-content;
     border-radius: 2rem;
+    transition: 0.3s all ease;
+
     
 }
 .modal .cancel{
@@ -151,7 +157,7 @@ body {
     min-width: none;
 }
 
-.modal input:focus{
+.modal input:focus, .modal textarea:focus{
     outline: 2px solid var(--t);
     flex-grow: 1;
 }
@@ -186,6 +192,24 @@ body {
     grid-area: 1/1/2/3;
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
+}
+
+.plus{
+    border-radius: 100vh;
+    background-color: var(--bg);
+    padding: 0.3rem;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: ease 0.3s all;
+}
+
+.plus:hover{
+    filter:brightness(0.95);
 }
 
 .header i{
@@ -196,39 +220,64 @@ body {
     font-size: 1.5rem;
     padding-left: 1rem;
 }
+
 .filter{
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
     border-radius: 0.5rem;
+    cursor: pointer;
+    transition: ease all 0.3s;
 }
 .filter:hover{
-    background-color: rgba(0,0,0,0.05);
-    cursor: pointer;
+    background-color: rgba(0,0,0,0.1);
 }
 
+.filterselect{
+    transition: 0.3 all ease;
+    background-color: rgba(0,0,0,0.1);
+}
+.filter div{
+    pointer-events: none
+}
+
+.labels{
+    display: flex;
+    gap: 0.5rem;
+}
 .color{
+    box-sizing: border-box;
     width: 2rem;
     height: 2rem;
     border-radius: 1rem;
     flex-shrink: 0;
+    pointer-events: none;
+    transition: ease 0.3s all;
 }
 
 .color1{
     background-color: var(--purple);
+    border: 2px solid var(--purple);
 }
 
 .color2{
     background-color: var(--blue);
+    border: 2px solid var(--blue);
 }
 
 .color3{
     background-color: var(--red);
+    border: 2px solid var(--red);
 }
 
 .color4{
     background-color: var(--green);
+    border: 2px solid var(--green);
 }
 
 .hide-read{
@@ -242,6 +291,7 @@ body {
 }
 
 .hide-read input, .read input{
+    flex-shrink: 0;
     appearance: none;
     background-color: none;
     margin: 0;
@@ -292,12 +342,13 @@ body {
     grid-template-rows: repeat( auto-fit, minmax(100px, 1fr) );
     gap: 1.5rem;
     width: 100%;
+    height: fit-content;
 } 
 
 .item{
     background-color: var(--yellow);
     height: fit-content;
-    max-width: 600px;
+    max-width: 800px;
     border-radius: 0.5rem;
     padding: 1rem;
     display: flex;
