@@ -13,11 +13,72 @@ const modalTags = document.querySelectorAll('.modaltag');
 const addButton = document.querySelector('.add');
 const optionsButton = document.querySelectorAll('.fa-ellipsis');
 const deleteButton = document.querySelector('.options-delete');
-const editButton = document.querySelector('.options-edit')
+const editButton = document.querySelector('.options-edit');
 const tColor = 'rgb(105, 102, 92);'
 
+let curFilter = null;
+let curFilterElement = null;
+// handleFilter handles when a filter is clicked
+function handleFilter(e){
+    
+    if(e.id == curFilter){
+        
+        e.style = '';
+        e.firstChild.style = '';
+        curFilter = null;
+        content.innerHTML = null;
+        for(let i = 0; i < myLibrary.length; i++){
+            if((myLibrary[i] != null && !(myLibrary[i].read && hideReadInput.checked))){
+              displayBook(myLibrary[i],i);
+            }
+          }
+    } else {
+        if(curFilterElement){
+            curFilterElement.style = '';
+            curFilterElement.firstChild.style = '';
+        }
 
+        e.style = 'background-color: rgba(0,0,0,0.1);';
+        e.firstChild.style.border = '2px solid rgb(105, 102, 92)';
+        content.innerHTML = null;
+        for(let i = 0; i < myLibrary.length; i++){
+            if((myLibrary[i] != null) && myLibrary[i].tags.includes(Number(e.id)) && !(myLibrary[i].read && hideReadInput.checked)){
+              displayBook(myLibrary[i],i);
+            }
+          }
+          curFilter = Number(e.id);
+          
+          curFilterElement = e;
+    }
+}
+// handleHideRead Hides all read books
+function handleHideRead(e){
+    content.innerHTML = null;
+    for(let i = 0; i < myLibrary.length; i++){
+        if((myLibrary[i] != null) && !(myLibrary[i].read && e.checked)){
+            if(curFilter == null){
+                displayBook(myLibrary[i],i);
+            } else if (myLibrary[i].tags.includes(curFilter)){
+                displayBook(myLibrary[i],i);
+            }
+          
+        }
+      }
+    
+}
+// handleRead toggles a books read / unread status
+function handleRead(e){
+    const index = e.parentElement.parentElement.parentElement.id;
+    myLibrary[index].read = !myLibrary[index].read;
+    if(hideReadInput.checked && myLibrary[index].read){
+        const remove =  e.parentElement.parentElement.parentElement;
+        remove.style = "opacity: 0; transform: translateY(-0.5rem); transition: ease 0.2s all";
+        setTimeout(function() {
+            remove.remove();
+          }, 300);
 
+    }
+}
 function handleDeleteButton(e){
     const index = e.parentElement.parentElement.parentElement.parentElement.id;
     const remove =  e.parentElement.parentElement.parentElement.parentElement;
@@ -26,7 +87,6 @@ function handleDeleteButton(e){
         remove.remove();
       }, 300);
     myLibrary[index] = null;
-    console.log(myLibrary);
 }
 
 // Controls the opening and closing of the menu on the cards
@@ -229,7 +289,12 @@ function displayBottom(myBook){
   const bottom = document.createElement("bottom");
   bottom.classList.add("bottom");
   bottom.appendChild(labels);
-  bottom.innerHTML += '<div class="read"><input type="checkbox" class="read-box"><div>Finished</div></div>';
+  if(myBook.read){
+    bottom.innerHTML += '<div class="read"><input onclick={handleRead(this)} type="checkbox" class="read-box" checked><div>Finished</div></div>';
+  } else {
+    bottom.innerHTML += '<div class="read"><input onclick={handleRead(this)} type="checkbox" class="read-box"><div>Finished</div></div>';
+  }
+  
   return bottom;
 }
 

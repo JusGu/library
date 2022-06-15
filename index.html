@@ -42,10 +42,10 @@
                 <div class="modal-tags">
                     <h3>Tags</h3>
                     <div class="tags">
-                        <div class="filter filter1 modaltag modaltag1"><div class="color1 color"></div>fiction</div>
-                        <div class="filter filter2 modaltag modaltag2"><div class="color2 color"></div>non-fiction</div>
-                        <div class="filter filter3 modaltag modaltag3"><div class="color3 color"></div>manga</div>
-                        <div class="filter filter4 modaltag modaltag4"><div class="color4 color"></div>biography</div>
+                        <div class="filter noselect filter1 modaltag modaltag1"><div class="color1 color"></div>fiction</div>
+                        <div class="filter noselect filter2 modaltag modaltag2"><div class="color2 color"></div>non-fiction</div>
+                        <div class="filter noselect filter3 modaltag modaltag3"><div class="color3 color"></div>manga</div>
+                        <div class="filter noselect filter4 modaltag modaltag4"><div class="color4 color"></div>biography</div>
                     </div>
                 </div>
             </div>
@@ -61,12 +61,12 @@
         <div class="sidebar">
             
             <div id="filters">
-                <div class="filter filter1"><div class="color1 color"></div>fiction</div>
-                <div class="filter filter2"><div class="color2 color"></div>non-fiction</div>
-                <div class="filter filter3"><div class="color3 color"></div>manga</div>
-                <div class="filter filter4"><div class="color4 color"></div>biography</div>
+                <div onclick={handleFilter(this)} id = "1" class="filter filter1 noselect"><div class="color1 color"></div>fiction</div>
+                <div onclick={handleFilter(this)} id = "2" class="filter filter2 noselect"><div class="color2 color"></div>non-fiction</div>
+                <div onclick={handleFilter(this)} id = "3" class="filter filter3 noselect"><div class="color3 color"></div>manga</div>
+                <div onclick={handleFilter(this)} id = "4" class="filter filter4 noselect"><div class="color4 color"></div>biography</div>
             </div>
-            <div class="hide-read"><input type="checkbox" class="hide-read-checkbox"><p>Hide Finished Books</p></div>
+            <div class="hide-read"><input onclick={handleHideRead(this)} type="checkbox" class="hide-read-checkbox"><p>Hide Finished Books</p></div>
         </div>
         <div class="content">
             <!-- EXAMPLE START -->
