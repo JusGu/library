@@ -14,7 +14,10 @@ const addButton = document.querySelector('.add');
 const optionsButton = document.querySelectorAll('.fa-ellipsis');
 const deleteButton = document.querySelector('.options-delete');
 const editButton = document.querySelector('.options-edit');
+const errorTitle = document.querySelector('.error-title');
+const errorPage = document.querySelector('.error-page')
 const tColor = 'rgb(105, 102, 92);'
+
 
 let curFilter = null;
 let curFilterElement = null;
@@ -166,7 +169,26 @@ function handleAddButton() {
     addBookToLibrary(newBook);
     displayBooks(myLibrary);
     handleCancel();
+
+  } else {
+    if(modalTitle.value == ""){
+      console.log(modalTitle);
+      modalTitle.classList.add("error");
+      errorTitle.style.display = "inline";
+    } else {
+      modalTitle.classList.remove("error");
+      errorTitle.style.display = "none";
+    }
+  
+    if(!Number.isInteger(Number(modalPages.value)) || modalPages.value < 0){
+      modalPages.classList.add("error");
+      errorPage.style.display = "inline";
+    } else {
+      modalPages.classList.remove("error");
+      errorPage.style.display = "none";
+    }
   }
+
 
 }
 // Handle clicking plus sign and cancel on modal

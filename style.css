@@ -484,3 +484,24 @@ body {
     margin-top: 0px;
     margin-bottom: 0px;
 }
+
+.error{
+    outline: 1px #ff1d4a solid !important;
+}
+
+.error:focus{
+    outline: 2px #ff1d4a solid !important;
+}
+
+.error-title{
+    margin:3px;
+    display: none;
+    font-size: 10px;
+    color: #ff1d4a;
+}
+.error-page{
+    margin:3px;
+    display: none;
+    font-size: 10px;
+    color: #ff1d4a;
+}
