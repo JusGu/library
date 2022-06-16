@@ -23,8 +23,8 @@ let curFilter = null;
 let curFilterElement = null;
 // handleFilter handles when a filter is clicked
 function handleFilter(e) {
-
-  if (e.id == curFilter) {
+  let filterID = Number(e.id.slice(0, -1));
+  if (filterID == curFilter) {
 
     e.style = '';
     e.firstChild.style = '';
@@ -57,15 +57,14 @@ function handleFilter(e) {
     setTimeout(function () {
       content.innerHTML = null;
       for (let i = 0; i < myLibrary.length; i++) {
-        if ((myLibrary[i] != null) && myLibrary[i].tags.includes(Number(e.id)) && !(myLibrary[i].read && hideReadInput.checked)) {
+        if ((myLibrary[i] != null) && myLibrary[i].tags.includes(filterID) && !(myLibrary[i].read && hideReadInput.checked)) {
           displayBook(myLibrary[i], i);
         }
       }
 
     }, 150);
 
-    curFilter = Number(e.id);
-
+    curFilter = filterID;
     curFilterElement = e;
   }
 }
@@ -100,18 +99,10 @@ function handleRead(e) {
 
   }
 }
-function handleDeleteButton(e) {
-  const index = e.parentElement.parentElement.parentElement.parentElement.id;
-  const remove = e.parentElement.parentElement.parentElement.parentElement;
-  remove.style = "opacity: 0; transform: translateY(-0.5rem); transition: ease 0.2s all";
-  setTimeout(function () {
-    remove.remove();
-  }, 300);
-  myLibrary[index] = null;
-}
 
+// MENU CONTROLS
 // Controls the opening and closing of the menu on the cards
-let menuOpen = false;
+let menuOpen = false; 
 let curMenu = null;
 
 function handleOptionsButton(e) {
@@ -137,6 +128,44 @@ function closeMenu() {
   curMenu.style = "";
   curMenu = null;
 }
+
+// handles the delete button on the menu
+function handleDeleteButton(e) {
+  const index = e.parentElement.parentElement.parentElement.parentElement.id;
+  const remove = e.parentElement.parentElement.parentElement.parentElement;
+  remove.style = "opacity: 0; transform: translateY(-0.5rem); transition: ease 0.2s all";
+  setTimeout(function () {
+    remove.remove();
+  }, 300);
+  myLibrary[index] = null;
+}
+
+let curEdit = -1;
+// handles the edit button on the menu
+function handleEditButton(e){
+  console.log(addButton);
+  addButton.innerHTML = "Edit";
+  const index = e.parentElement.parentElement.parentElement.parentElement.id;
+  const edit = e.parentElement.parentElement.parentElement.parentElement;
+  curEdit = index;
+  let updateBook = myLibrary[curEdit];
+  // render modal with current values
+  modalTitle.value = updateBook.title;
+  modalAuthor.value = updateBook.author;
+  modalPages.value = updateBook.pages;
+  modalDesc.value = updateBook.desc;
+  const tags = updateBook.tags;
+  for (let i = 0; i < tags.length; i++) {
+    modalTags[i].classList.toggle('filterselect');
+    modalTags[i].firstChild.style = "border: 2px solid " + tColor;
+  }
+  select.style = "visibility: visible; opacity: 1;";
+  modal.style = "";
+}
+
+// MODAL CONTROLS
+
+// Adds hovering effect on each modal when selected
 modalTags.forEach(item => {
   item.addEventListener('click', e => {
     e.target.firstChild.style = e.target.firstChild.style.border == "" ? "border: 2px solid " + tColor : null;
@@ -146,6 +175,7 @@ modalTags.forEach(item => {
 })
 addButton.addEventListener('click', handleAddButton);
 
+// handleAddButton handles when the user clicks the add button on the modal
 function handleAddButton() {
   const tags = [];
   for (let i = 0; i < modalTags.length; i++) {
@@ -155,47 +185,96 @@ function handleAddButton() {
 
   }
   if (Number.isInteger(Number(modalPages.value)) && modalPages.value >= 0 && modalTitle.value != "") {
-    newBook = new Book(modalTitle.value, modalAuthor.value, modalPages.value, modalDesc.value, tags, false);
-    modalTitle.value = "";
-    modalAuthor.value = "";
-    modalPages.value = "";
-    modalDesc.value = "";
-    for (let i = 0; i < modalTags.length; i++) {
-      if (modalTags[i].classList.contains('filterselect')) {
-        modalTags[i].classList.toggle('filterselect');
-      }
-      modalTags[i].firstChild.style.border = "";
-    }
-    addBookToLibrary(newBook);
-    displayBooks(myLibrary);
-    handleCancel();
+    if(curEdit == -1){
+      console.log("ADDING NEW BOOK");
+      newBook = new Book(modalTitle.value, modalAuthor.value, modalPages.value, modalDesc.value, tags, false);
+      addBookToLibrary(newBook);
+      displayBooks(myLibrary);
+      handleCancel();
+    } else {
+      console.log("UPDATING BOOK");
+      let updateBook = myLibrary[curEdit];
+      // update library item
+      updateBook.title = modalTitle.value;
+      updateBook.author =  modalAuthor.value;
+      updateBook.pages = modalPages.value;
+      updateBook.desc = modalDesc.value;
+      updateBook.tags = tags;
 
+      const editItem = document.getElementById(curEdit);
+      const title = displayTitle(updateBook);
+      const top = displayTop(updateBook);
+      const desc = document.createElement("p");
+      desc.innerText = updateBook.desc;
+      const bottom = displayBottom(updateBook);
+      editItem.innerHTML = '';
+      editItem.appendChild(title);
+      editItem.appendChild(top);
+      editItem.appendChild(desc);
+      editItem.appendChild(bottom);
+      editItem.style = "opacity: 0; transform: translateY(-0.5rem); transition: ease 0.2s all";
+      setTimeout(function () {
+        editItem.style = "transition: ease 0.2s all";
+      }, 100);
+      curEdit = -1;
+      console.log("MY LIBRARY");
+      console.log(myLibrary);
+      console.log("MY CUR LIBRARY")
+      console.log(myCurLibrary);
+      
+      handleCancel();
+      
+    }
   } else {
-    if(modalTitle.value == ""){
-      console.log(modalTitle);
-      modalTitle.classList.add("error");
-      errorTitle.style.display = "inline";
-    } else {
-      modalTitle.classList.remove("error");
-      errorTitle.style.display = "none";
+    handleError();
+  }
+}
+
+// resetModal resets the modal to an empty state;
+function resetModal() {
+  modalTitle.classList.remove("error");
+  errorTitle.style.display = "none";
+  modalPages.classList.remove("error");
+  errorPage.style.display = "none";
+  modalTitle.value = "";
+  modalAuthor.value = "";
+  modalPages.value = "";
+  modalDesc.value = "";
+  for (let i = 0; i < modalTags.length; i++) {
+    if (modalTags[i].classList.contains('filterselect')) {
+      modalTags[i].classList.toggle('filterselect');
     }
-  
-    if(!Number.isInteger(Number(modalPages.value)) || modalPages.value < 0){
-      modalPages.classList.add("error");
-      errorPage.style.display = "inline";
-    } else {
-      modalPages.classList.remove("error");
-      errorPage.style.display = "none";
-    }
+    modalTags[i].firstChild.style.border = "";
   }
 
-
 }
+
+// handleError handles the displaying of error when a user inputs an invalid input
+function handleError() {
+  if (modalTitle.value == "") {
+    console.log(modalTitle);
+    modalTitle.classList.add("error");
+    errorTitle.style.display = "inline";
+  } else {
+    modalTitle.classList.remove("error");
+    errorTitle.style.display = "none";
+  }
+
+  if (!Number.isInteger(Number(modalPages.value)) || modalPages.value < 0) {
+    modalPages.classList.add("error");
+    errorPage.style.display = "inline";
+  } else {
+    modalPages.classList.remove("error");
+    errorPage.style.display = "none";
+  }
+}
+
 // Handle clicking plus sign and cancel on modal
 select.style = "visibility: hidden; opacity: 0;";
 modal.style = " transform: translateY(-3rem);";
 addBook.addEventListener('click', handleAddBook);
 function handleAddBook() {
+  addButton.innerHTML = "Add";
   select.style = "visibility: visible; opacity: 1;";
   modal.style = "";
 }
@@ -222,6 +301,9 @@ cancel.addEventListener('click', handleCancel);
 function handleCancel() {
   select.style = "visibility: hidden; opacity: 0;";
   modal.style = "transform: translateY(-3rem);";
+  setTimeout(function () {
+    resetModal()
+  }, 400);
 }
 
 function Book(title, author, pages, desc, tags, read) {
@@ -292,7 +374,7 @@ function displayTitle(myBook) {
     <div class="options-container">
         <i onclick={handleOptionsButton(this)} class="fa-solid fa-ellipsis menu"></i>
         <div class="options menu">
-            <p class="options-edit menu">Edit ...</p>
+            <p onclick={handleEditButton(this)} class="options-edit menu">Edit ...</p>
             <hr class="menu">
             <p onclick={handleDeleteButton(this)} class="options-delete menu">Delete</p>
         </div>

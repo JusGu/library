@@ -67,14 +67,14 @@
         <div class="sidebar">
             
             <div id="filters">
-                <div onclick={handleFilter(this)} id = "1" class="filter filter1 noselect"><div class="color1 color"></div>fiction</div>
-                <div onclick={handleFilter(this)} id = "2" class="filter filter2 noselect"><div class="color2 color"></div>non-fiction</div>
-                <div onclick={handleFilter(this)} id = "3" class="filter filter3 noselect"><div class="color3 color"></div>manga</div>
-                <div onclick={handleFilter(this)} id = "4" class="filter filter4 noselect"><div class="color4 color"></div>biography</div>
+                <div onclick={handleFilter(this)} id = "1f" class="filter filter1 noselect"><div class="color1 color"></div>fiction</div>
+                <div onclick={handleFilter(this)} id = "2f" class="filter filter2 noselect"><div class="color2 color"></div>non-fiction</div>
+                <div onclick={handleFilter(this)} id = "3f" class="filter filter3 noselect"><div class="color3 color"></div>manga</div>
+                <div onclick={handleFilter(this)} id = "4f" class="filter filter4 noselect"><div class="color4 color"></div>biography</div>
             </div>
             <div class="hide-read"><input onclick={handleHideRead(this)} type="checkbox" class="hide-read-checkbox"><p>Hide Finished Books</p></div>
         </div>
-        <div class="content">
+        <div id = "content" class="content">
             <!-- EXAMPLE START -->
             <!-- <div class="item">
 
