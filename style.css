@@ -60,7 +60,23 @@ body {
     display: grid;
     grid: 1fr 10fr / minmax(150px, 1fr) 5fr;
     gap: 2rem;
+    max-height: 100vh;
 }
+@media (max-width:800px){
+    body{
+        margin: 1rem;
+    }
+    .container{
+        display: inline;
+    }
+    #filters{
+        display: flex;
+        margin-top: 4vh;
+        font-size: min(1rem, 3vw);
+        margin-bottom: 1vh;
+    }
+}
+
 
 .select{
     position:absolute;
@@ -216,6 +232,9 @@ body {
         align-items: flex-end;
         padding: 0px;
     }
+    .modal textarea{
+        height: 13vh;
+    }
 
     .select{
         padding: 0px;
@@ -270,7 +289,25 @@ body {
     border-radius: 0.5rem;
     cursor: pointer;
     transition: ease all 0.3s;
-    min-width: 8rem;
+    min-width: fit-content;
+}
+@media (max-width:800px){
+    #filters .filter{
+        padding: 0.5rem;
+        padding-left: 2vw;
+        padding-right: 2vw;
+        gap:1vw;
+        margin-left: 1vw;
+        margin-right: 1vw;
+        flex-shrink: 1;
+        
+    }
+    .filter{
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        margin-top: 0rem;
+        margin-bottom: 0rem;
+    }
 }
 .filter:hover{
     background-color: rgba(0,0,0,0.1);
@@ -292,10 +329,17 @@ body {
     box-sizing: border-box;
     width: 2rem;
     height: 2rem;
-    border-radius: 1rem;
+    border-radius: 100vw;
     flex-shrink: 0;
     pointer-events: none;
     transition: ease 0.3s all;
+}
+
+@media (max-width:800px){
+    #filters .color, .item .color{
+        width: 5vw;
+        height: 5vw;
+    }
 }
 
 .color1{
@@ -327,6 +371,8 @@ body {
     align-items: center;
     transition: 0.3s all ease;
 }
+
+
 
 .hide-read p{
     width: 100%;
@@ -376,7 +422,25 @@ body {
     gap: 0.3rem;
 }
 
-
+@media (max-width:800px){
+    .hide-read{
+        float: right;
+        padding: 0px;
+        padding-left: 2vw;
+        padding-right: 2vw;
+        margin-left: 1vw;
+        margin-right: 1vw;
+        margin-top: -1vh;
+        margin-bottom: 0px;
+        /* display: none; */
+    }
+    .hide-read p{
+        font-size: min(1rem, 3vw);
+    }
+    .hide-read input, .read input{
+        transform: scale(0.75) translateY(-0.075em);
+    }
+}
 
 
 .content{
@@ -387,6 +451,12 @@ body {
     width: 100%;
     height: fit-content;
 } 
+
+@media (max-width:800px){
+    .content{
+        grid-template-columns: repeat( auto-fill, minmax(90vw, 1fr) );
+    }
+}
 
 .item{
     background-color: var(--yellow);

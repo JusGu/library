@@ -1,4 +1,4 @@
-const myLibrary = [];
+let myLibrary = [];
 const myCurLibrary = [];
 const content = document.querySelector('.content');
 const addBook = document.querySelector('.plus');
@@ -18,7 +18,10 @@ const errorTitle = document.querySelector('.error-title');
 const errorPage = document.querySelector('.error-page')
 const tColor = 'rgb(105, 102, 92);'
 
-displayBooks(myLibrary);
+
+
+
+
 
 let curFilter = null;
 let curFilterElement = null;
@@ -99,6 +102,7 @@ function handleRead(e) {
     }, 300);
 
   }
+  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
 }
 
 // MENU CONTROLS
@@ -139,6 +143,8 @@ function handleDeleteButton(e) {
     remove.remove();
   }, 300);
   myLibrary[index] = null;
+  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+  
 }
 
 let curEdit = -1;
@@ -247,6 +253,7 @@ function resetModal() {
     }
     modalTags[i].firstChild.style.border = "";
   }
+  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
 
 }
 
@@ -423,4 +430,13 @@ function displayBottom(myBook) {
   return bottom;
 }
 
+var storedBooks = JSON.parse(localStorage.getItem("myLibrary"));
+console.log(storedBooks);
+for(let i = 0; i < storedBooks.length; i++){
+  if(storedBooks[i] !== null){
+    myLibrary.push(storedBooks[i]);
+  }
+}
+displayBooks(myLibrary);
+console.log(myLibrary);
 
