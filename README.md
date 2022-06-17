@@ -9,6 +9,7 @@ Finally, Library allows you to hide finished books from your main view.
 ![Screenshot](https://i.imgur.com/Qvo27V0.png)
 
 Library also works well on mobile!
+
 ![Screenshot](https://i.imgur.com/uo5rgVg.png)
 ![Screenshot](https://i.imgur.com/JBgzuhY.png)
 
