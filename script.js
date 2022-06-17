@@ -130,7 +130,7 @@ window.addEventListener('click', e => {
 
 function closeMenu() {
   menuOpen = false;
-  curMenu.style = "";
+  curMenu.style = "transition: all 0.3s ease";
   curMenu = null;
 }
 
@@ -150,7 +150,7 @@ function handleDeleteButton(e) {
 let curEdit = -1;
 // handles the edit button on the menu
 function handleEditButton(e){
-  console.log(addButton);
+  closeMenu();
   addButton.innerHTML = "Edit";
   const index = e.parentElement.parentElement.parentElement.parentElement.id;
   const edit = e.parentElement.parentElement.parentElement.parentElement;
@@ -345,7 +345,11 @@ function displayBook(myBook, num) {
   const title = displayTitle(myBook);
   const top = displayTop(myBook);
   const desc = document.createElement("p");
-  desc.innerText = myBook.desc;
+  if(myBook.read){
+    desc.innerHTML = myBook.desc;
+  } else { // default option unless I want to add links on card
+    desc.innerText = myBook.desc;
+  }
   const bottom = displayBottom(myBook);
   const item = document.createElement("div");
   item.classList.add("item");
@@ -431,12 +435,32 @@ function displayBottom(myBook) {
 }
 
 var storedBooks = JSON.parse(localStorage.getItem("myLibrary"));
-console.log(storedBooks);
-for(let i = 0; i < storedBooks.length; i++){
-  if(storedBooks[i] !== null){
-    myLibrary.push(storedBooks[i]);
+var firstTime = localStorage.getItem("first_instance");
+if(!firstTime) {
+    localStorage.setItem("first_instance","1");
+    let firstBookString = `
+    Library is a great website for keeping track of all the books you've read!
+
+    It helps you keep track of your reading progress, including the title, author, a small description, and number of pages for each book. You can add new books and edit existing entries at any time, as well as filter your books by genre. 
+    
+    Finally, Library allows you to hide finished books from your main view.
+    `;
+    firstBook = new Book("Welcome to Library!", "JusGu", "", firstBookString, [], false);
+    secondBook = new Book("Visit my GitHub", "JusGu", "", `If you're interested in seeing more projects like this, please visit my GitHub at <a style='text-decoration: none; color: ${tColor}' target = '_blank'href='https://github.com/JusGu'> https://github.com/JusGu</a> `, [], true);
+    myLibrary.unshift(secondBook);
+    myLibrary.unshift(firstBook);
+    localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+} else {
+  if (storedBooks) {
+    for (let i = 0; i < storedBooks.length; i++) {
+      if (storedBooks[i] !== null) {
+        myLibrary.push(storedBooks[i]);
+      }
+    }
   }
 }
+
+
+console.log()
 displayBooks(myLibrary);
-console.log(myLibrary);
 
