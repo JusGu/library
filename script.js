@@ -18,6 +18,7 @@ const errorTitle = document.querySelector('.error-title');
 const errorPage = document.querySelector('.error-page')
 const tColor = 'rgb(105, 102, 92);'
 
+displayBooks(myLibrary);
 
 let curFilter = null;
 let curFilterElement = null;
@@ -322,12 +323,14 @@ function Book(title, author, pages, desc, tags, read) {
 // console.log(hello.info());
 function addBookToLibrary(myBook) {
   myLibrary.push(myBook);
+  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
 }
 function displayBooks(myLibrary) {
   for (let i = 0; i < myLibrary.length; i++) {
     if (!myCurLibrary.includes(myLibrary[i]) && myLibrary[i]) {
       displayBook(myLibrary[i], i);
       myCurLibrary.push(myLibrary[i]);
+      
     }
   }
 }
