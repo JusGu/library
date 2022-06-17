@@ -14,7 +14,7 @@ Library also works well on mobile!
 
 
 ## Quick Start
-Check out the website [here!](https://jusgu.github.io/etch-a-sketch)
+Check out the website [here!](https://jusgu.github.io/library)
 
 ## Tools Used
 - HTML
